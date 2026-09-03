@@ -1,0 +1,36 @@
+# 가상환경
+.venv/
+venv/
+env/
+
+# 환경변수 / API 키
+.env
+.env.*
+!.env.example
+
+# Python 캐시
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 패키징 / 빌드
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# 테스트 / 커버리지
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# 노트북
+.ipynb_checkpoints/
+
+# 에디터 / OS
+.DS_Store
+.idea/
+*.swp
