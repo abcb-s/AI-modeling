@@ -36,39 +36,14 @@ def calculate(operation: str, a: float, b: float) -> float:
     else:
         return f"지원하지 않는 연산: {operation}"
     
-TOOLS = {"calculate": calculate}
-
-chat = client.chats.create(
-    model="gemini-3.1-flash-lite",
-    config=types.GenerateContentConfig(
-        tools=[calculate],
-        automatic_function_calling=types.AutomaticFunctionCallingConfig(
-            disable=True,
+    chat = client.chat.create(
+        model="gemini-3.1-flash-lite",
+        config=types.GenerateContentConfig(
+            tools=[calculate],
+            automatic_function_calling=types.AutomaticFunctionCallingConfig(
+                disabled=True,
+            ),
         ),
-    ),
-)
-
-print("=== 수동 함수 호출 과정 관찰 ===\n")    
-question = "1234더하기 234는?"
-print(f"질문: {question}\n")
-
-response = chat.send_message(question)
-
-fc = response.function_calls[0]
-args = dict(fc.args)
-
-print(f"[Gemini 도구 선택] 함수명: {fc.name} ")
-print(f"[Gemini 인자 결정] {args}")
-
-print("[파이썬 함수 실행중...]")
-result = TOOLS[fc.name](**args)
-print(f"[실행결과] {result}")
-
-response = chat.send_message(
-    types.Part.from_function_response(
-        name = fc.name,
-        response = {"result": result}
     )
-)
-
-print(f"[Gemini 최종 응답] {response.text}")
+    
+    
